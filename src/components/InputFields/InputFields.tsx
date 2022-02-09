@@ -1,20 +1,22 @@
-import React from 'react';
-import './styles.css';
+import React from "react";
+import "./styles.css";
 
 interface Props {
-  handleAddTodo: () => void
-  inputRef: React.RefObject<HTMLInputElement>
+  handleAddTodo: (e: React.FormEvent<HTMLFormElement>) => void;
+  ref: React.MutableRefObject<HTMLInputElement | null>;
 }
 
-const InputFields: React.FC<Props> = React.forwardRef<HTMLInputElement, Props>((props, inputRef) => {
-  const { handleAddTodo } = props
+const InputFields = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
+  const { handleAddTodo } = props;
 
   return (
-    <div className="form">
-      <input type="text" ref={inputRef} className="input" />
-      <button type="button" onClick={handleAddTodo} className="button">add</button>
-    </div>
-  )
+    <form className="form" onSubmit={handleAddTodo}>
+      <input type="text" ref={ref} className="input" />
+      <button type="submit" className="button">
+        add
+      </button>
+    </form>
+  );
 });
 
-export default InputFields
+export default InputFields;
