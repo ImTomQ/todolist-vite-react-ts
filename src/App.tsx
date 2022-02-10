@@ -6,6 +6,7 @@ import { Todo } from "./models/models";
 
 const App: React.FC = () => {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputEditRef = React.useRef<HTMLInputElement>(null);
   const [todoList, setTodoList] = useState<Array<Todo>>([]);
 
   const handleAddTodo = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -21,6 +22,10 @@ const App: React.FC = () => {
     inputRef?.current?.blur();
   };
 
+  const handleEditTodo = (id: number): void => {
+    setTodoList(todoList.map(todo => todo.id === id ? {...todo, name: inputEditRef.current?.value || ''} : todo))
+  }
+
   useEffect(() => {
     inputRef?.current?.focus();
   }, []);
@@ -28,7 +33,7 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <InputFields ref={inputRef} handleAddTodo={handleAddTodo} />
-      <TodoList todoList={todoList} />
+      <TodoList ref={inputEditRef} todoList={todoList} handleEditTodo={handleEditTodo} />
     </div>
   );
 };
