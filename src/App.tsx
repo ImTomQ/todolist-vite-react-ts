@@ -23,8 +23,26 @@ const App: React.FC = () => {
   };
 
   const handleEditTodo = (id: number): void => {
-    setTodoList(todoList.map(todo => todo.id === id ? {...todo, name: inputEditRef.current?.value || ''} : todo))
-  }
+    setTodoList(
+      todoList.map((todo) =>
+        todo.id === id
+          ? { ...todo, name: inputEditRef.current?.value || "" }
+          : todo
+      )
+    );
+  };
+
+  const handleDoneTodo = (id: number): void => {
+    setTodoList(
+      todoList.map((todo) =>
+        todo.id === id ? { ...todo, isDone: true } : todo
+      )
+    );
+  };
+
+  const handleDeleteTodo = (id: number): void => {
+    setTodoList(todoList.filter((todo) => todo.id !== id));
+  };
 
   useEffect(() => {
     inputRef?.current?.focus();
@@ -33,7 +51,13 @@ const App: React.FC = () => {
   return (
     <div className="app">
       <InputFields ref={inputRef} handleAddTodo={handleAddTodo} />
-      <TodoList ref={inputEditRef} todoList={todoList} handleEditTodo={handleEditTodo} />
+      <TodoList
+        ref={inputEditRef}
+        todoList={todoList}
+        handleEditTodo={handleEditTodo}
+        handleDoneTodo={handleDoneTodo}
+        handleDeleteTodo={handleDeleteTodo}
+      />
     </div>
   );
 };
